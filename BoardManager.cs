@@ -1,18 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
-
-public delegate void UndoChangeHandler(object sender, UndoChangeArgs args);
-
-public class BoardManager : MonoBehaviour
+﻿public class BoardManager
 {
-    public GameObject blockPrefab;
-
-    public GameObject boardContainer;
-    public GameObject horizontalLinePrefab;
-    public GameObject pointPrefab;
-
-    public GameObject targetPrefab;
 
     private DropOutStack<Placement> UndoStack = new DropOutStack<Placement>(1);
     public GameObject verticalLinePrefab;
@@ -193,37 +180,5 @@ public class BoardManager : MonoBehaviour
         if (blocks[2] != null) newPoint.AddLine(verticalLinePrefab, position.ToVector3(0f, -0.5f));
         if (blocks[3] != null) newPoint.AddLine(verticalLinePrefab, position.ToVector3(0f, 0.5f));
         newPoint.Blocks = blockList;
-    }
-
-    private Point AddPoint(Vector2Int position)
-    {
-        var instance = Instantiate(pointPrefab, position.ToVector3(), Quaternion.identity);
-        instance.transform.SetParent(BoardContainer.transform);
-        var point = instance.GetComponent<Point>();
-        point.position = position;
-        Board[position.x, position.y] = point;
-        Points.Add(point);
-        return point;
-    }
-
-    private Target AddTarget(Vector2Int position)
-    {
-        var instance = Instantiate(targetPrefab, position.ToVector3(), Quaternion.identity);
-        instance.transform.SetParent(BoardContainer.transform);
-        var target = instance.GetComponent<Target>();
-        target.position = position;
-        Targets.Add(target);
-        return target;
-    }
-
-    private Block AddBlock(Vector2Int position)
-    {
-        var instance = Instantiate(blockPrefab, position.ToVector3(), Quaternion.identity);
-        instance.transform.SetParent(BoardContainer.transform);
-        var block = instance.GetComponent<Block>();
-        block.position = position;
-        Board[position.x, position.y] = block;
-        Blocks.Add(block);
-        return block;
     }
 }

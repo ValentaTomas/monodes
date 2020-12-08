@@ -1,5 +1,6 @@
-﻿import Vector2Int from './Vector2Int';
+import { NumberLiteralType } from "typescript";
 
 export default interface Zone {
-    position: Vector2Int;
+  x: number;
+  y: number;
 }
