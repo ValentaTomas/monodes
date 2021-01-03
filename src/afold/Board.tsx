@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { BoardProps } from 'boardgame.io/react';
 
 enum Stage {
   STAGE_1 = 1,
@@ -26,6 +27,7 @@ const Content = styled.div`
   width: 100%;
   height: 100%;
   user-select: none;
+  background: #1C1B26;
 `;
 
 const Container = styled.div`
@@ -33,7 +35,7 @@ const Container = styled.div`
   margin: auto;
 `;
 
-const Board = styled.div`
+const BoardContainer = styled.div`
   display: flex;
   flex-direction: column;
 `;
@@ -50,6 +52,7 @@ const Cell = styled.div`
   margin: 10px;
   height: 38px;
   display: flex;
+  font-family: Fira Code;
   text-align: center;
   justify-content: center;
   white-space: nowrap;
@@ -245,7 +248,8 @@ function checkEnd(board: BoardCell[][]) {
   }, 0) === 1;
 }
 
-function Afold() {
+function Board(props: BoardProps) {
+
   const [boardState, setBoardState] = useState(() => copyBoard(setup));
   const [end, setEnd] = useState(false);
 
@@ -268,7 +272,7 @@ function Afold() {
       <Reset onClick={handleReset}>RESET</Reset>
       <Container>
         <Cell>{end ? 'END' : '|-'}</Cell>
-        {!end && <Board>
+        {!end && <BoardContainer>
           {
             boardState.map((row, i) =>
               <Row key={i.toString()}>
@@ -291,10 +295,10 @@ function Afold() {
               </Row>
             )
           }
-        </Board>}
+        </BoardContainer>}
       </Container>
     </Content>
   );
 }
 
-export default Afold;
+export default Board;

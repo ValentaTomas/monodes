@@ -1,5 +1,9 @@
-import { Game } from 'boardgame.io';
+import { Game, Ctx } from 'boardgame.io';
 import { INVALID_MOVE } from 'boardgame.io/core';
+
+type GameState = {
+  cells: Array<any>;
+}
 
 function IsVictory(cells: number[][]) {
   const positions = [
@@ -26,10 +30,10 @@ function IsDraw(cells: number[][]) {
   return cells.filter(c => c === null).length === 0;
 }
 
-export const game: Game = {
+const game: Game<GameState> = {
   setup: () => ({ cells: Array(9).fill(null) }),
   moves: {
-    clickCell: (G, ctx, id) => {
+    clickCell: (G: GameState, ctx: Ctx, id: number) => {
       if (G.cells[id] !== null) {
         return INVALID_MOVE;
       }
@@ -39,7 +43,7 @@ export const game: Game = {
   turn: {
     moveLimit: 1,
   },
-  endIf: (G, ctx) => {
+  endIf: (G: GameState, ctx: Ctx) => {
     if (IsVictory(G.cells)) {
       return { winner: ctx.currentPlayer };
     }
@@ -48,3 +52,5 @@ export const game: Game = {
     }
   },
 };
+
+export default game;

@@ -1,30 +1,27 @@
-import React from 'react';
-import styled from 'styled-components';
-// import { Client } from 'boardgame.io/react';
-// import { game } from './Game';
-// import Board from './Board';
+import { Switch, Route, BrowserRouter as Router, Redirect } from 'react-router-dom';
 
-import Board from './afold/Board';
-
-const Content = styled.div`
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-`;
+import Afold from './Afold';
 
 function App() {
   return (
-    <Content>
-      <Board />
-    </Content>
+    <Router>
+      <Switch>
+        <Route
+          path="/"
+          exact
+        >
+          <Redirect to={{ pathname: "/afold" }} />
+        </Route>
+
+        <Route
+          path="/afold"
+        >
+          <Afold />
+        </Route>
+
+      </Switch>
+    </Router>
   );
 }
-
-// const App = Client({
-//   game,
-//   board: Board,
-// });
 
 export default App;

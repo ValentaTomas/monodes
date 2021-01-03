@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import { Ctx } from 'boardgame.io';
 
@@ -18,9 +18,11 @@ interface BoardProps {
   G: { [id: string]: any };
 }
 
-function Board(props: BoardProps) {
+function Board(props: any) {
   const rowSize = 3;
   const columnSize = 3;
+
+  console.log('Board');
 
   return (
     <div>

@@ -9,8 +9,7 @@ html, body {
   padding: 0;
 
   color: white;
-  font-family: "Fira Code", -apple-system, BlinkMacSystemFont;
-  background: #1C1B26;
+  font-family: -apple-system, BlinkMacSystemFont;
   overflow: hidden;
 }
 
@@ -20,6 +19,11 @@ body {
 }
 
 #root {
+  margin: 0 auto;
+  height: 100%;
+}
+
+.bgio-client {
   margin: 0 auto;
   height: 100%;
 }
