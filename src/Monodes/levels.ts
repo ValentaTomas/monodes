@@ -1,5 +1,5 @@
 ﻿import LevelBuilder from './LevelBuilder';
-import Level from './Level';
+import { Level } from './types';
 
 const builder = new LevelBuilder();
 

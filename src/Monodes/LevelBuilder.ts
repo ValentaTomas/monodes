@@ -1,5 +1,4 @@
-﻿import Zone from './Zone';
-import Level from './Level';
+﻿import { Zone, Level } from './types';
 
 export default class LevelBuilder {
   public blocks: Zone[] = [];
