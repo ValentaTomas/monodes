@@ -27,6 +27,20 @@ function App() {
           </Route>
 
           <Route
+            path="/afold"
+            exact
+          >
+            <Redirect to={{ pathname: "/afold/0" }} />
+          </Route>
+
+          <Route
+            path="/monodes"
+            exact
+          >
+            <Redirect to={{ pathname: "/monodes/0" }} />
+          </Route>
+
+          <Route
             path="/afold/:level"
           >
             <Afold />

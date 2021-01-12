@@ -3,12 +3,12 @@ export enum Stage {
   STAGE_2 = 2,
 }
 
-export enum Setup {
+export enum Connection {
   EMPTY = 'empty',
   HORIZONTAL = 'horizontal',
   VERTICAL = 'vertical',
 }
 
-export type Level = BoardCell[][];
+export type Board = Cell[][];
 
-export type BoardCell = (Stage | Setup);
+export type Cell = (Stage | Connection);

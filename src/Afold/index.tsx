@@ -2,9 +2,9 @@ import {
   useParams,
   NavLink,
 } from 'react-router-dom';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Level, Stage, Setup } from './types';
+import { Board, Stage, Connection } from './types';
 import levels from './levels';
 
 const Menu = styled.div`
@@ -86,7 +86,7 @@ function notEmpty<T>(value: T | null | undefined): value is T {
   return value !== null && value !== undefined;
 }
 
-function getNeighbour(board: Level, position: [number, number]) {
+function getNeighbour(board: Board, position: [number, number]) {
   try {
     return {
       type: board[position[0]][position[1]],
@@ -97,7 +97,7 @@ function getNeighbour(board: Level, position: [number, number]) {
   }
 }
 
-function getConnections(board: Level, position: [number, number]) {
+function getConnections(board: Board, position: [number, number]) {
   return [
     getNeighbour(board, [position[0] + 1, position[1]]),
     getNeighbour(board, [position[0] - 1, position[1]]),
@@ -105,7 +105,7 @@ function getConnections(board: Level, position: [number, number]) {
     getNeighbour(board, [position[0], position[1] - 1]),
   ]
     .filter(notEmpty)
-    .filter(n => n.type === Setup.VERTICAL || n.type === Setup.HORIZONTAL);
+    .filter(n => n.type === Connection.VERTICAL || n.type === Connection.HORIZONTAL);
 }
 
 function getPositionInDirection(position: [number, number], direction: [number, number]) {
@@ -120,7 +120,7 @@ function getPositionBetween(position1: [number, number], position2: [number, num
   return [i, j];
 }
 
-function getConnectedStages(board: Level, position: [number, number]) {
+function getConnectedStages(board: Board, position: [number, number]) {
   const connections = getConnections(board, position);
 
   return connections.map(connection => {
@@ -129,11 +129,11 @@ function getConnectedStages(board: Level, position: [number, number]) {
     }
 
     switch (connection.type) {
-      case Setup.HORIZONTAL:
+      case Connection.HORIZONTAL:
         const j = connection.position[1] - (position[1] - connection.position[1]);
         return getNeighbour(board, [position[0], j]);
 
-      case Setup.VERTICAL:
+      case Connection.VERTICAL:
         const i = connection.position[0] - (position[0] - connection.position[0]);
         return getNeighbour(board, [i, position[1]]);
 
@@ -160,15 +160,15 @@ function evaluateStage(stage: Stage): [Stage, number] {
   return [newStage, resonance];
 }
 
-function copyBoard(board: Level) {
+function copyBoard(board: Board) {
   return board.map(row => row.slice());
 }
 
-function copyEmpty(board: Level) {
+function copyEmpty(board: Board) {
   return board.map(row => row.slice().fill(0));
 }
 
-function calculateResonance(board: Level, ignorePosition: [number, number]): Level {
+function calculateResonance(board: Board, ignorePosition: [number, number]): Board {
   let hasResonance = false;
 
   const newStages = copyBoard(board);
@@ -210,7 +210,7 @@ function calculateResonance(board: Level, ignorePosition: [number, number]): Lev
   return hasResonance ? calculateResonance(newBoard, ignorePosition) : newBoard;
 }
 
-function transformState(board: Level, position: [number, number]) {
+function transformState(board: Board, position: [number, number]) {
 
   const cell = board[position[0]][position[1]];
 
@@ -234,14 +234,14 @@ function transformState(board: Level, position: [number, number]) {
 
   const newBoard = calculateResonance(board, position);
 
-  newBoard[position[0]][position[1]] = Setup.EMPTY;
+  newBoard[position[0]][position[1]] = Connection.EMPTY;
   const executedConnectionPosition = getPositionBetween(position, target.position);
-  newBoard[executedConnectionPosition[0]][executedConnectionPosition[1]] = Setup.EMPTY;
+  newBoard[executedConnectionPosition[0]][executedConnectionPosition[1]] = Connection.EMPTY;
 
   return newBoard;
 }
 
-function checkEnd(board: Level) {
+function checkEnd(board: Board) {
   return board.flat().reduce((acc, cell) => {
     switch (cell) {
       case Stage.STAGE_1:
@@ -277,15 +277,20 @@ function Afold() {
     setEnd(false);
   }
 
+  useEffect(() => {
+    setBoardState(copyBoard(level));
+    setEnd(false);
+  }, [level]);
+
   return (
     <Content>
       <Menu>
         <StyledLink to={{
-          pathname: `/afold/${levelIndex - 1}`,
+          pathname: `/afold/${levelIndex === 0 ? 0 : levelIndex - 1}`,
         }} > {'<'} </StyledLink>
         <Reset onClick={handleReset}>RESET LEVEL {levelIndex}</Reset>
         <StyledLink to={{
-          pathname: `/afold/${levelIndex + 1}`,
+          pathname: `/afold/${levelIndex === levels.length - 1 ? levels.length - 1 : levelIndex + 1}`,
         }} > {'>'} </StyledLink>
       </Menu>
       <Container>
@@ -297,11 +302,11 @@ function Afold() {
                 {
                   row.map((cell, j) => {
                     switch (cell) {
-                      case Setup.EMPTY:
+                      case Connection.EMPTY:
                         return <Cell key={j.toString()} />;
-                      case Setup.HORIZONTAL:
+                      case Connection.HORIZONTAL:
                         return <Cell key={j.toString()}> —— </Cell>;
-                      case Setup.VERTICAL:
+                      case Connection.VERTICAL:
                         return <Cell key={j.toString()} > | </Cell>;
                       case Stage.STAGE_1:
                         return <StageCell key={j.toString()} onClick={() => handleCellClick(i, j)}> 1 </StageCell>;

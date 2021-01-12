@@ -1,14 +1,14 @@
 import {
-  Setup,
+  Connection,
   Stage,
-  Level,
+  Board,
 } from './types';
 
-const levels: Level[] = [
+const levels: Board[] = [
   [
-    [Stage.STAGE_1, Setup.HORIZONTAL, Stage.STAGE_2, Setup.HORIZONTAL, Stage.STAGE_1],
-    [Setup.VERTICAL, Setup.EMPTY, Setup.VERTICAL, Setup.EMPTY, Setup.EMPTY],
-    [Stage.STAGE_1, Setup.EMPTY, Stage.STAGE_1, Setup.HORIZONTAL, Stage.STAGE_1],
+    [Stage.STAGE_1, Connection.HORIZONTAL, Stage.STAGE_2, Connection.HORIZONTAL, Stage.STAGE_1],
+    [Connection.VERTICAL, Connection.EMPTY, Connection.VERTICAL, Connection.EMPTY, Connection.EMPTY],
+    [Stage.STAGE_1, Connection.EMPTY, Stage.STAGE_1, Connection.HORIZONTAL, Stage.STAGE_1],
   ],
 ];
 
