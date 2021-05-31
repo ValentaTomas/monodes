@@ -8,7 +8,7 @@ import {
 import styled from 'styled-components';
 
 import Afold from './Afold';
-import Monodes from './Monodes';
+// import Monodes from './Monodes';
 
 const Content = styled.div`
   margin: 0 auto;
@@ -34,12 +34,12 @@ function App() {
             <Redirect to={{ pathname: "/afold/0" }} />
           </Route>
 
-          <Route
+          {/* <Route
             path="/monodes"
             exact
           >
             <Redirect to={{ pathname: "/monodes/0" }} />
-          </Route>
+          </Route> */}
 
           <Route
             path="/afold/:level"
@@ -47,11 +47,11 @@ function App() {
             <Afold />
           </Route>
 
-          <Route
+          {/* <Route
             path="/monodes/:level"
           >
             <Monodes />
-          </Route>
+          </Route> */}
 
         </Switch>
       </Router>
