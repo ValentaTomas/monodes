@@ -254,16 +254,16 @@ function Monodes() {
     <Content>
       <Menu>
         <StyledLink to={{
-          pathname: `/monodes/${levelIndex === 0 ? 0 : levelIndex - 1}`,
+          pathname: `/levels/${levelIndex === 0 ? 0 : levelIndex - 1}`,
         }} > {'<'} </StyledLink>
         <Reset onClick={handleReset}>RESET LEVEL {levelIndex}</Reset>
         <StyledLink to={{
-          pathname: `/monodes/${levelIndex === levels.length - 1 ? levels.length - 1 : levelIndex + 1}`,
+          pathname: `/levels/${levelIndex === levels.length - 1 ? levels.length - 1 : levelIndex + 1}`,
         }} > {'>'} </StyledLink>
       </Menu>
       <Container>
         {end && <StyledLink to={{
-          pathname: `/monodes/${levelIndex === levels.length - 1 ? levels.length - 1 : levelIndex + 1}`,
+          pathname: `/levels/${levelIndex === levels.length - 1 ? levels.length - 1 : levelIndex + 1}`,
         }} > {'NEXT'} </StyledLink>}
 
         {!end && <BoardContainer>

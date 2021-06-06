@@ -286,11 +286,11 @@ function Afold() {
     <Content>
       <Menu>
         <StyledLink to={{
-          pathname: `/afold/${levelIndex === 0 ? 0 : levelIndex - 1}`,
+          pathname: `/test-mechanic/${levelIndex === 0 ? 0 : levelIndex - 1}`,
         }} > {'<'} </StyledLink>
         <Reset onClick={handleReset}>RESET LEVEL {levelIndex}</Reset>
         <StyledLink to={{
-          pathname: `/afold/${levelIndex === levels.length - 1 ? levels.length - 1 : levelIndex + 1}`,
+          pathname: `/test-mechanic/${levelIndex === levels.length - 1 ? levels.length - 1 : levelIndex + 1}`,
         }} > {'>'} </StyledLink>
       </Menu>
       <Container>
