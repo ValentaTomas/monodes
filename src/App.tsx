@@ -24,31 +24,31 @@ function App() {
             path="/"
             exact
           >
-            <Redirect to={{ pathname: "/afold/0" }} />
+            <Redirect to={{ pathname: "/levels/0" }} />
           </Route>
 
           <Route
-            path="/afold"
+            path="/test-mechanic"
             exact
           >
-            <Redirect to={{ pathname: "/afold/0" }} />
+            <Redirect to={{ pathname: "/test-mechanic/0" }} />
           </Route>
 
           <Route
-            path="/monodes"
+            path="/levels"
             exact
           >
-            <Redirect to={{ pathname: "/monodes/0" }} />
+            <Redirect to={{ pathname: "/levels/0" }} />
           </Route>
 
           <Route
-            path="/afold/:level"
+            path="/test-mechanic/:level"
           >
             <Afold />
           </Route>
 
           <Route
-            path="/monodes/:level"
+            path="/levels/:level"
           >
             <Monodes />
           </Route>
