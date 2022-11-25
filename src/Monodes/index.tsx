@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, NavLink } from 'react-router-dom';
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
+
 import levels from './levels';
 
 import { Zone, Level, Cell, Stage, Setup, Board } from './types';
@@ -8,16 +10,18 @@ import { Zone, Level, Cell, Stage, Setup, Board } from './types';
 const Menu = styled.div`
   display: flex;
   justify-content: center;
-`;
-
+  margin-top: 5px;
+  font-weight: 700;
+  `;
+  
 const StyledLink = styled(NavLink)`
-  background: green;
-  /* margin:  0 auto; */
   margin: 0px 5px;
   padding: 10px;
+  border-radius: 3px;
+  font-weight: 700;
   :hover {
     cursor: pointer;
-    background: darkgreen;
+    background: #363452;
   }
   text-decoration: none;
   color: white;
@@ -46,7 +50,7 @@ const Row = styled.div`
   display: flex;
 `;
 
-const CellElement = styled.div<{ isTarget?: boolean }>`
+const CellElement = styled(motion.div)<{ isTarget?: boolean }>`
   width: 38px;
   border-radius: 3px;
   font-weight: 400;
@@ -59,7 +63,7 @@ const CellElement = styled.div<{ isTarget?: boolean }>`
   align-items: center;
   justify-content: center;
   white-space: nowrap;
-  ${props => props.isTarget && `background: blue;`}
+  ${props => props.isTarget && `background: #392772; outline: 3px double #593bbd;`}
 `;
 
 const PointCell = styled(CellElement)`
@@ -67,7 +71,7 @@ const PointCell = styled(CellElement)`
   border: 3px solid gold;
   align-self: center;
   justify-content: center;
-
+  
   width: 15px;
   height: 15px;
 
@@ -77,13 +81,13 @@ const PointCell = styled(CellElement)`
 `;
 
 const Reset = styled.div`
-  background: green;
-  /* margin:  0 auto; */
-  margin: 0px 5px;
+  margin: 0px 3px;
   padding: 10px;
+  border-radius: 3px;
+
   :hover {
     cursor: pointer;
-    background: darkgreen;
+    background: #363452;
   }
 `;
 
@@ -255,16 +259,16 @@ function Monodes() {
       <Menu>
         <StyledLink to={{
           pathname: `/levels/${levelIndex === 0 ? 0 : levelIndex - 1}`,
-        }} > {'<'} </StyledLink>
-        <Reset onClick={handleReset}>RESET LEVEL {levelIndex}</Reset>
+        }} > {'←'} </StyledLink>
+        <Reset onClick={handleReset}>↺ Reset level {levelIndex + 1}</Reset>
         <StyledLink to={{
           pathname: `/levels/${levelIndex === levels.length - 1 ? levels.length - 1 : levelIndex + 1}`,
-        }} > {'>'} </StyledLink>
+        }} > {'→'} </StyledLink>
       </Menu>
       <Container>
         {end && <StyledLink to={{
           pathname: `/levels/${levelIndex === levels.length - 1 ? levels.length - 1 : levelIndex + 1}`,
-        }} > {'NEXT'} </StyledLink>}
+        }} > {'Next'} </StyledLink>}
 
         {!end && <BoardContainer>
           {
@@ -278,7 +282,7 @@ function Monodes() {
                     switch (cell) {
                       case Setup.POINT:
                         return <CellElement isTarget={target} key={j.toString()} onClick={() => handleCellClick(i, j)}>
-                          <PointCell  ></PointCell>
+                          <PointCell/>
                         </CellElement>
                       case Stage.SQUARE:
                         return <StageCell isTarget={target} key={j.toString()} />;
